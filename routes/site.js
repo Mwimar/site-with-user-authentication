@@ -53,6 +53,11 @@ router.post("/login", async function (req, res) {
     console.log("Could not log in");
     return res.redirect("/login");
   }
+
+  const passwordsAreEqual = await bcrypt.compare(
+    enteredPassword,
+    existingUser.password
+  ); //yields a boolean value
 });
 
 router.get("/admin", function (req, res) {
