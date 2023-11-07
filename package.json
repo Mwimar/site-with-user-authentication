@@ -9,6 +9,7 @@
   "author": "Mark Mwima",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "ejs": "^3.1.9",
     "express": "^4.18.2",
     "mongodb": "^6.2.0",
