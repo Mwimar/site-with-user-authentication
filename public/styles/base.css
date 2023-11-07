@@ -1,0 +1,26 @@
+html{
+
+}
+a{
+    text-decoration:none;
+}
+#main-header {
+    background-color: green;
+    padding: 2rem 10%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+}
+
+nav ul li{
+    padding:0 0.5rem;
+}
+
+nav a{
+    color:white;
+}
