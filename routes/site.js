@@ -90,7 +90,7 @@ router.post("/login", async function (req, res) {
     email: existingUser.email,
   };
   req.session.isAuthenticated = true;
-  res.session.save(function () {
+  req.session.save(function () {
     res.redirect("/admin");
   });
 

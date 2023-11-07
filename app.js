@@ -33,6 +33,9 @@ app.use(
     resave: false,
     saveUnitialized: false,
     store: sessionStore,
+    // cookie: {
+    //   maxAge: 24 * 60 * 60 * 1000,
+    // },
   })
 );
 
