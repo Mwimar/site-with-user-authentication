@@ -58,6 +58,14 @@ router.post("/login", async function (req, res) {
     enteredPassword,
     existingUser.password
   ); //yields a boolean value
+
+  if (!passwordsAreEqual) {
+    console.log("Could not log in");
+    return res.redirect("/login");
+  }
+
+  console.log("User is Authenticated");
+  res.redirect("/admin");
 });
 
 router.get("/admin", function (req, res) {
