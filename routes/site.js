@@ -29,6 +29,18 @@ router.post("/signup", async function (req, res) {
   const enteredPassword = userData.password;
   const hashedPassword = await bcrypt.hash(enteredPassword, 12);
 
+  if (
+    !enteredEmail ||
+    !enteredConfirmEmail ||
+    !enteredPassword ||
+    enteredPassword < 6 ||
+    enteredEmail !== enteredConfirmEmail ||
+    !enteredEmail.includes("@")
+  ) {
+    console.log("incorrect Data");
+    return res.redirect("signup");
+  }
+
   const user = {
     email: enteredEmail,
     password: hashedPassword,
