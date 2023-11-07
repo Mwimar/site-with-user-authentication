@@ -8,14 +8,19 @@
   </body>
   <main id="signup">
     <h1>Sign Up</h1>
-    <form>
+    <form action="/signup" method="POST">
       <div class="form-control">
         <label for="email">Email</label>
         <input type="email" name="email" id="email" required />
       </div>
 
       <div class="form-control">
-        <label for="email">Password</label>
+        <label for="confirm-email">Confirm Email</label>
+        <input type="email" name="confirm-email" id="confirm-email" required />
+      </div>
+
+      <div class="form-control">
+        <label for="password">Password</label>
         <input type="password" name="password" id="password" required />
       </div>
       <button class="btn">Signup</button>
