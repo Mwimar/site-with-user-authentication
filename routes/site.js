@@ -33,12 +33,22 @@ router.post("/signup", async function (req, res) {
     !enteredEmail ||
     !enteredConfirmEmail ||
     !enteredPassword ||
-    enteredPassword < 6 ||
+    enteredPassword.trim() < 6 ||
     enteredEmail !== enteredConfirmEmail ||
     !enteredEmail.includes("@")
   ) {
     console.log("incorrect Data");
     return res.redirect("signup");
+  }
+
+  const existingUser = db
+    .getDb()
+    .collection("users")
+    .findOne({ email: enteredEmail });
+
+  if (existingUser) {
+    console.log("That User Already Exists");
+    return res.redirect("/signup");
   }
 
   const user = {
