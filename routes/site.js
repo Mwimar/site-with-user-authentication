@@ -110,29 +110,46 @@ router.post("/login", async function (req, res) {
   req.session.user = {
     id: existingUser._id,
     email: existingUser.email,
+    isAdmin: existingUser.isAdmin,
   };
   req.session.isAuthenticated = true;
   req.session.save(function () {});
 
-  res.redirect("/admin");
+  res.redirect("/profile");
   console.log("User is Authenticated");
 });
 
-router.get("/admin", function (req, res) {
-  console.log(req.session.isAuthenticated);
+router.get("/admin", async function (req, res) {
+  //   console.log(req.session.isAuthenticated);
   if (!req.session.isAuthenticated) {
-    console.log("anything!!!!!");
     return res.status(401).render("401");
   }
+
+  console.log(req.session.user.id);
+
+  try {
+    const user = await db
+      .getDb()
+      .collection("users")
+      .findOne({ _id: req.session.user.id });
+    console.log("The User is:", user);
+    console.log("Database connection", db.getDb());
+  } catch (error) {
+    console.log("Could not find user");
+  }
+
+  //   if (!user || !user.isAdmin) {
+  //     res.status(403).render("403");
+  //   }
   res.render("admin");
 });
 
-// router.get("/profile", function (req, res) {
-//   if (!req.session.isAuthenticated) {
-//     return res.status(401).render("401");
-//   }
-//   res.render("profile");
-// });
+router.get("/profile", function (req, res) {
+  if (!req.session.isAuthenticated) {
+    return res.status(401).render("401");
+  }
+  res.render("profile");
+});
 
 router.post("/logout", function (req, res) {
   req.session.user = null;
