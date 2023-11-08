@@ -56,10 +56,9 @@ router.post("/signup", async function (req, res) {
     };
 
     req.session.save(function () {
-      return res.redirect("signup");
+      res.redirect("signup");
     });
-    console.log("incorrect Data");
-    return res.redirect("signup");
+    return;
   }
 
   const existingUser = db
