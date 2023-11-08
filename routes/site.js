@@ -25,7 +25,7 @@ router.get("/signup", function (req, res) {
       password: "",
     };
   }
-  res.render("signup");
+  res.render("signup", { inputData: sessionInputData });
 });
 
 router.get("/login", function (req, res) {
