@@ -8,6 +8,9 @@
   </body>
   <main id="signup">
     <h1>Sign Up</h1>
+    <% if(hasError=true) {%>
+    <p id="input-error"><%= inputData.message %></p>
+    <% } %>
     <form action="/signup" method="POST">
       <div class="form-control">
         <label for="email">Email</label>
