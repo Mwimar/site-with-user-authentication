@@ -16,6 +16,15 @@ router.get("/", function (req, res) {
 
 router.get("/signup", function (req, res) {
   let sessionInputData = req.session.inputData;
+
+  if (!sessionInputData) {
+    sessionInputData = {
+      hasError: false,
+      email: "",
+      confirmEmail: "",
+      password: "",
+    };
+  }
   res.render("signup");
 });
 
