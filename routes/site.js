@@ -37,7 +37,14 @@ router.post("/signup", async function (req, res) {
     enteredEmail !== enteredConfirmEmail ||
     !enteredEmail.includes("@")
   ) {
-    console.log("incorrect Data");
+    req.session.inputData = {
+      hasError: true,
+      message: "Invalid Input please check data",
+      email: enteredEmail,
+      confirmEmail: enteredConfirmEmail,
+      password: enteredPassword,
+    };
+
     return res.redirect("signup");
   }
 
