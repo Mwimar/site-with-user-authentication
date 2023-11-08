@@ -62,12 +62,13 @@ router.post("/signup", async function (req, res) {
     return;
   }
 
-  const existingUser = db
+  const existingUser = await db
     .getDb()
     .collection("users")
     .findOne({ email: enteredEmail });
 
   if (existingUser) {
+    console.log(existingUser);
     console.log("That User Already Exists");
     return res.redirect("/signup");
   }
@@ -103,7 +104,7 @@ router.post("/login", async function (req, res) {
   ); //yields a boolean value
 
   if (!passwordsAreEqual) {
-    console.log("Could not log in");
+    console.log("Could not log in Passwords are not Equal");
     return res.redirect("/login");
   }
   req.session.user = {
@@ -111,19 +112,27 @@ router.post("/login", async function (req, res) {
     email: existingUser.email,
   };
   req.session.isAuthenticated = true;
-  req.session.save(function () {
-    res.redirect("/admin");
-  });
+  req.session.save(function () {});
 
+  res.redirect("/admin");
   console.log("User is Authenticated");
 });
 
 router.get("/admin", function (req, res) {
+  console.log(req.session.isAuthenticated);
   if (!req.session.isAuthenticated) {
+    console.log("anything!!!!!");
     return res.status(401).render("401");
   }
   res.render("admin");
 });
+
+// router.get("/profile", function (req, res) {
+//   if (!req.session.isAuthenticated) {
+//     return res.status(401).render("401");
+//   }
+//   res.render("profile");
+// });
 
 router.post("/logout", function (req, res) {
   req.session.user = null;
