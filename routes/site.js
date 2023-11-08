@@ -15,6 +15,7 @@ router.get("/", function (req, res) {
 });
 
 router.get("/signup", function (req, res) {
+  let sessionInputData = req.session.inputData;
   res.render("signup");
 });
 
@@ -45,6 +46,10 @@ router.post("/signup", async function (req, res) {
       password: enteredPassword,
     };
 
+    req.session.save(function () {
+      return res.redirect("signup");
+    });
+    console.log("incorrect Data");
     return res.redirect("signup");
   }
 
