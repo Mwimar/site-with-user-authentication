@@ -124,23 +124,17 @@ router.get("/admin", async function (req, res) {
   if (!req.session.isAuthenticated) {
     return res.status(401).render("401");
   }
+  const userId = req.session.user.id;
+  console.log(userId);
 
-  console.log(req.session.user.id);
+  const user = await db
+    .getDb()
+    .collection("users")
+    .findOne({ _id: new ObjectId(userId) });
 
-  try {
-    const user = await db
-      .getDb()
-      .collection("users")
-      .findOne({ _id: req.session.user.id });
-    console.log("The User is:", user);
-    console.log("Database connection", db.getDb());
-  } catch (error) {
-    console.log("Could not find user");
+  if (!user || !user.isAdmin) {
+    res.status(403).render("403");
   }
-
-  //   if (!user || !user.isAdmin) {
-  //     res.status(403).render("403");
-  //   }
   res.render("admin");
 });
 
