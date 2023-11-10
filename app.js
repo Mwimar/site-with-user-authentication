@@ -19,6 +19,7 @@ const sessionStore = new MongoDBStore({
   databaseName: "auth-db",
   collection: "sessions",
 });
+
 app.use(express.json());
 
 app.set("view engine", "ejs");
@@ -41,6 +42,25 @@ app.use(
 
 app.use(express.static("public"));
 
+app.use(async function (req, res, next) {
+  const user = req.session.user;
+  const isAuth = req.session.isAuthenticated;
+
+  if (!user || !isAuth) {
+    return next();
+  }
+
+  const userDoc = await db
+    .getDb()
+    .collection("users")
+    .findOne({ _id: user.id });
+  const isAdmin = userDoc.isAdmin;
+
+  res.locals.isAuth = isAuth;
+  res.locals.isAdmin = isAdmin;
+
+  next();
+});
 app.use(siteRoutes);
 
 app.use(function (error, req, res, next) {
