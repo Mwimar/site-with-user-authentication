@@ -125,7 +125,7 @@ router.get("/admin", async function (req, res) {
     return res.status(401).render("401");
   }
   const userId = req.session.user.id;
-  console.log(userId);
+  //   console.log(userId);
 
   const user = await db
     .getDb()

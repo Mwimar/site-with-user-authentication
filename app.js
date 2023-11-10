@@ -3,6 +3,8 @@ const path = require("path");
 const express = require("express");
 
 const session = require("express-session");
+const mongodb = require("mongodb");
+const ObjectId = mongodb.ObjectId;
 
 const mongodbStore = require("connect-mongodb-session");
 
@@ -53,7 +55,7 @@ app.use(async function (req, res, next) {
   const userDoc = await db
     .getDb()
     .collection("users")
-    .findOne({ _id: user.id });
+    .findOne({ _id: new ObjectId(user.id) });
   const isAdmin = userDoc.isAdmin;
 
   res.locals.isAuth = isAuth;
@@ -61,6 +63,7 @@ app.use(async function (req, res, next) {
 
   next();
 });
+
 app.use(siteRoutes);
 
 app.use(function (error, req, res, next) {
