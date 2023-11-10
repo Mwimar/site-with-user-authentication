@@ -15,19 +15,20 @@
       <li>
         <a href="/login">Login</a>
       </li>
+      <% if(locals.isAdmin) {%>
       <li>
         <a href="/admin">Admin</a>
       </li>
+      <% } %> <% if(locals.isAuth){ %>
       <li>
         <a href="/profile">Profile</a>
       </li>
       <li>
-        <% if(locals.isAuth){ %>
         <form action="/logout" method="POST">
           <button>Logout</button>
         </form>
-        <% } %>
       </li>
+      <% } %>
     </ul>
   </nav>
 </header>
